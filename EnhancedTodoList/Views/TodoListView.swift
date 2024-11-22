@@ -17,6 +17,8 @@ struct TodoListView: View {
     // Our list of items to complete
     @State private var items: [TodoItem] = []
     
+    //make the list be able to be searched
+    @State private var searchText = ""
     // MARK: Computed properties
     var body: some View {
         NavigationStack {
@@ -62,10 +64,12 @@ struct TodoListView: View {
                         }
                         .onDelete(perform: removeRows)
                     }
+                    .searchable(text: $searchText)
                 }
                     .toolbar {
                         EditButton()
                     }
+                   
                 }
             }
 
