@@ -47,17 +47,25 @@ struct TodoListView: View {
                     
                 } else {
                     
-                    List(items) { currentItem in
-                        Label {
-                            Text(currentItem.details)
-                        } icon: {
-                            Image(systemName: currentItem.isCompleted ? "checkmark.circle" : "circle")
-                                .onTapGesture {
-                                    toggle(item: currentItem)
-                                }
+                    NavigationStack {
+                    List {
+                        ForEach (items){
+                            currentItem in
+                            Label {
+                                Text(currentItem.details)
+                            } icon: {
+                                Image(systemName: currentItem.isCompleted ? "checkmark.circle" : "circle")
+                                    .onTapGesture {
+                                        toggle(item: currentItem)
+                                    }
+                            }
                         }
+                        .onDelete(perform: removeRows)
                     }
-                    
+                }
+                    .toolbar {
+                        EditButton()
+                    }
                 }
             }
 
@@ -87,6 +95,10 @@ struct TodoListView: View {
             item.isCompleted = true
         }
         
+    }
+    
+    func removeRows(at offsets: IndexSet) {
+        items.remove(atOffsets: offsets)
     }
 
 
