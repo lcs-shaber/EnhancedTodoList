@@ -18,8 +18,22 @@ struct TodoListView: View {
     @State private var items: [TodoItem] = []
     
     //make the list be able to be searched
-    @State private var searchText = ""
+    @State var searchText = ""
+    
     // MARK: Computed properties
+    
+    // Provide list of to-do items filtered based on the search text
+    var filteredItems: [TodoItem] {
+        if searchText.isEmpty {
+            return items
+        } else {
+            return items.filter { item in
+                item.details.lowercased().contains(searchText.lowercased())
+            }
+        }
+    }
+     
+    // The user interface
     var body: some View {
         NavigationStack {
             VStack {
@@ -51,7 +65,7 @@ struct TodoListView: View {
                     
                     NavigationStack {
                     List {
-                        ForEach (items){
+                        ForEach (filteredItems){
                             currentItem in
                             Label {
                                 Text(currentItem.details)
