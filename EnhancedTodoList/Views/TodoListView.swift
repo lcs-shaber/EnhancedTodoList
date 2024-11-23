@@ -62,7 +62,7 @@ struct TodoListView: View {
                                     }
                             }
                         }
-                        .onDelete(perform: removeRows)
+                        .onDelete(perform: delete)
                     }
                     .searchable(text: $searchText)
                 }
@@ -101,7 +101,7 @@ struct TodoListView: View {
         
     }
     
-    func removeRows(at offsets: IndexSet) {
+    func delete(at offsets: IndexSet) {
         items.remove(atOffsets: offsets)
     }
 
